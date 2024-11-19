@@ -81,6 +81,8 @@ function App() {
       markdown += `[@${item.id}](${item.url})|`;
     }
 
+    markdown += `\n\n<sub>[Table made by TIT](https://team-info-table.seondal.kr/)</sub>`;
+
     setResult(markdown);
   }
 
