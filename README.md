@@ -6,9 +6,6 @@
 
 4시간만에 만든거라 코드는 엉망진창 기능도 별로 없지만 일단 작동은 해서 배포를 했어요 ~무려 0.1.0~
 
-### [https://profile-table-md.vercel.app/](https://profile-table-md.vercel.app/)
-
-
 <br/>
 
 ## 사용법
