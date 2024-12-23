@@ -7,6 +7,7 @@ import { GetUserResponse } from "./types/response";
 import ProfileCard from "./components/ProfileCard";
 import { styled } from "styled-components";
 import { GITHUB_TOKEN } from "./constant/env";
+import { gaEvent } from "./utils/ga4";
 
 function App() {
   const [value, setValue] = useState("");
@@ -25,6 +26,7 @@ function App() {
         }
       );
       if (response.status === 200) {
+        gaEvent({ event: "search_success", params: { userid: value } });
         const data: GetUserResponse = response.data;
         setProfile({
           id: data.login,
@@ -34,6 +36,7 @@ function App() {
         });
       }
     } catch (e: any) {
+      gaEvent({ event: "serach_fail", params: { userid: value } });
       const statusCode = e.response.status;
       if (statusCode === 404) {
         alert("올바른 깃허브 아이디를 입력해주세요");
@@ -45,11 +48,15 @@ function App() {
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    gaEvent({ event: "search_user", params: { userid: value } });
     getUser();
     setValue("");
   }
 
   function addProfile() {
+    if (profile) {
+      gaEvent({ event: "add_profile", params: { userid: profile.id } });
+    }
     setProfileList((prev) => [...prev, profile as Profile]);
   }
 
@@ -83,10 +90,12 @@ function App() {
 
     markdown += `\n\n<sub>[Table made by TIT](https://team-info-table.seondal.kr/)</sub>`;
 
+    gaEvent({ event: "create_table", params: { result: markdown } });
     setResult(markdown);
   }
 
   function copyResult() {
+    gaEvent({ event: "copy_result", params: { result } });
     navigator.clipboard.writeText(result as string).then(() => {
       alert("마크다운 코드가 복사되었습니다! 리드미에 붙여넣어보세요");
     });
