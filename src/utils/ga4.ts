@@ -8,7 +8,6 @@ export function gaEvent({ event, params }: GaEventI) {
     ? { ...params, debug_mode: true }
     : params;
 
-  console.log(process.env.REACT_APP_LOCAL);
   if (window.gtag) {
     window.gtag("event", event, eventParams);
   }
